@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VOID // DOWNLOADS</title>
+<style>
+:root{--a:#9b4dff;--b:#c084ff;--bg:#050507;--p:#0e0c14;--line:#2a173d;--muted:#91899d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f5f2fa;font-family:Arial,sans-serif;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(#9b4dff12 1px,transparent 1px),linear-gradient(90deg,#9b4dff12 1px,transparent 1px);background-size:39px 39px}
+.wrap{width:min(900px,calc(100% - 24px));margin:auto;position:relative}
+header{padding:42px 0 24px;border-bottom:1px solid var(--line)}
+.logo{font-size:34px;font-weight:900;letter-spacing:9px;color:var(--b);text-shadow:0 0 22px #9b4dff66}
+.sub,.kicker{font-size:10px;letter-spacing:5px;color:#77707f;margin-top:7px}
+.hero{padding:52px 0 28px}.kicker{margin:0}
+h1{font-size:clamp(48px,9vw,78px);line-height:.9;margin:10px 0 18px;letter-spacing:-3px}
+h1 span{color:var(--b)}.desc{color:#aaa3b2;margin-bottom:28px}
+.search{width:100%;padding:17px;border:1px solid var(--line);border-radius:12px;background:#0f0d15;color:white;outline:0}
+.search:focus{border-color:#9b4dffaa;box-shadow:0 0 25px #9b4dff1f}
+.toolbar{display:flex;justify-content:space-between;margin:18px 0;color:var(--muted);font-size:12px}
+.files{display:grid;gap:12px}.file{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:21px 19px;border:1px solid var(--line);border-radius:14px;background:#0e0c14e8;transition:.22s}
+.file:hover{transform:translateY(-3px);border-color:#9b4dff88;box-shadow:0 10px 35px #0008,0 0 25px #9b4dff18}
+.name{font-weight:800;font-size:16px;word-break:break-all}.meta{margin-top:7px;color:var(--muted);font-size:11px;display:flex;gap:10px;flex-wrap:wrap}
+.badge{padding:3px 7px;border:1px solid var(--line);border-radius:999px}.download{padding:12px 17px;border-radius:10px;background:linear-gradient(135deg,var(--a),#762cff);color:white;text-decoration:none;font-size:12px;font-weight:800;transition:.2s;white-space:nowrap}
+.download:hover{transform:scale(1.05);box-shadow:0 0 28px #9b4dff70}
+.empty{display:none;text-align:center;padding:35px;color:var(--muted);border:1px dashed var(--line);border-radius:14px;margin-top:12px}
+footer{border-top:1px solid var(--line);margin-top:45px;padding:24px 0 35px;color:#625d69;font-size:11px}
+@media(max-width:600px){.file{flex-direction:column;align-items:stretch}.download{text-align:center}.toolbar{flex-direction:column;gap:8px}h1{letter-spacing:-2px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="logo">VOID</div><div class="sub">DOWNLOAD CENTER // ONLINE</div></header>
+<section class="hero">
+<div class="kicker">SYSTEM://FILES</div>
+<h1>DOWNLOAD<br><span>THE VOID.</span></h1>
+<div class="desc">Pliki, paczki i rzeczy do pobrania w jednym miejscu.</div>
+<input id="search" class="search" placeholder="Szukaj pliku..." autocomplete="off">
+<div class="toolbar"><span>STATUS: <b style="color:#b98cff">ONLINE</b></span><span id="count"></span></div>
+</section>
+<main class="files" id="files">
+<article class="file" data-name="BOmbam0d.jar"><div><div class="name">BOmbam0d.jar</div><div class="meta"><span class="badge">JAR</span><span>0.46 MB</span><span>Pobrania: <b class="downloads">0</b></span></div></div><a class="download" href="./VOID_DOWNLOADS_ALL_FILES/files/BOmbam0d.jar" download data-file="BOmbam0d.jar">Pobierz ↓</a></article>
+<article class="file" data-name="Fastclient.jar"><div><div class="name">Fastclient.jar</div><div class="meta"><span class="badge">JAR</span><span>0.54 MB</span><span>Pobrania: <b class="downloads">0</b></span></div></div><a class="download" href="./VOID_DOWNLOADS_ALL_FILES/files/Fastclient.jar" download data-file="Fastclient.jar">Pobierz ↓</a></article>
+<article class="file" data-name="mcrynek-1.21.4.jar"><div><div class="name">mcrynek-1.21.4.jar</div><div class="meta"><span class="badge">JAR</span><span>0.06 MB</span><span>Pobrania: <b class="downloads">0</b></span></div></div><a class="download" href="./VOID_DOWNLOADS_ALL_FILES/files/mcrynek-1.21.4.jar" download data-file="mcrynek-1.21.4.jar">Pobierz ↓</a></article>
+</main>
+<div class="empty" id="empty">Nie znaleziono takiego pliku.</div>
+<footer>VOID // DOWNLOADS<br>your files. one place.</footer>
+</div>
+<script>
+const cards=[...document.querySelectorAll('.file')],search=document.querySelector('#search'),count=document.querySelector('#count'),empty=document.querySelector('#empty');
+function refresh(){let q=search.value.toLowerCase().trim(),n=0;cards.forEach(c=>{let ok=c.dataset.name.toLowerCase().includes(q);c.style.display=ok?'flex':'none';if(ok)n++});count.textContent=n+' / '+cards.length+' plików';empty.style.display=n?'none':'block'}
+search.addEventListener('input',refresh);
+document.querySelectorAll('.download').forEach(b=>{let k='void_download_'+b.dataset.file,c=b.parentElement.querySelector('.downloads');c.textContent=localStorage.getItem(k)||0;b.addEventListener('click',()=>{let n=Number(localStorage.getItem(k)||0)+1;localStorage.setItem(k,n);c.textContent=n})});refresh();
+</script>
+</body></html>
